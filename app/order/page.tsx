@@ -4,18 +4,20 @@ import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getFeaturedMenu } from "@/lib/actions";
 
 // Replace this with your actual Google Form URL
 const GOOGLE_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSd5SfMoT2bIH24qmgkp9eH8H1lkNtUAg_b_qCRCh1oZwP6lCw/viewform";
 
-export default function OrderPage() {
+export default async function OrderPage() {
+  const featured = await getFeaturedMenu();
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
       <div className="relative w-full h-[300px] rounded-xl overflow-hidden mb-10">
         <Image
-          src="/placeholder.svg?height=600&width=1200"
+          src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg"
           alt="BBQ spread"
           fill
           className="object-cover brightness-75"
@@ -82,25 +84,8 @@ export default function OrderPage() {
         <h2 className="text-3xl font-bold text-white mb-8 text-center">
           Popular Items
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              name: "Smoked Brisket",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "Pulled Pork",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "BBQ Ribs",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "Smoked Chicken",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-          ].map((item, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featured.map((item, index) => (
             <div
               key={index}
               className="group relative overflow-hidden rounded-lg"

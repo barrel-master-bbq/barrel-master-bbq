@@ -4,15 +4,22 @@ import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { menu } from "@/lib/menu";
 
-export default function MenuPage() {
+async function getMenu() {
+  const res = await fetch(`${process.env.MENU_API_URL}?type=menu`, {
+    next: { revalidate: 60 },
+  });
+  return res.json();
+}
+
+export default async function MenuPage() {
+  const menu = await getMenu();
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
       <div className="relative w-full h-[250px] rounded-xl overflow-hidden mb-10">
         <Image
-          src="/placeholder.svg?height=600&width=1200"
+          src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg"
           alt="BBQ spread"
           fill
           className="object-cover brightness-75"
@@ -34,27 +41,27 @@ export default function MenuPage() {
           <TabsList className="bg-muted">
             <TabsTrigger
               value="pork"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
               Pork
             </TabsTrigger>
             <TabsTrigger
               value="brisket"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
               Brisket
             </TabsTrigger>
 
             <TabsTrigger
               value="chicken"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
               Chicken
             </TabsTrigger>
 
             <TabsTrigger
               value="sides"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
               Sides
             </TabsTrigger>
@@ -64,28 +71,28 @@ export default function MenuPage() {
           <MenuTab
             value="pork"
             title="Pork"
-            description="Insert description here"
+            description="From fall-off-the-bone ribs to smoky pulled pork, our pork offerings are slow-cooked to perfection and loaded with rich, savory flavor."
             menuItems={menu.pork}
           />
 
           <MenuTab
             value="brisket"
             title="Brisket"
-            description="Insert description here"
+            description="Smoked low and slow, our brisket is tender, juicy, and full of that deep, wood-fired flavor BBQ dreams are made of."
             menuItems={menu.brisket}
           />
 
           <MenuTab
             value="chicken"
             title="Chicken"
-            description="Insert description here"
+            description="Our BBQ chicken is flame-kissed and seasoned just right — juicy on the inside, crisp on the outside, and bursting with flavor in every bite."
             menuItems={menu.chicken}
           />
 
           <MenuTab
             value="sides"
             title="Sides"
-            description="Insert description here"
+            description="No plate is complete without the classics. From creamy coleslaw to smoky beans, our sides bring balance to every BBQ bite."
             menuItems={menu.sides}
           />
         </div>

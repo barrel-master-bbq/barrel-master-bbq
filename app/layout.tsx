@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,6 +53,17 @@ export default function RootLayout({
         >
           <Navbar />
           <main>{children}</main>
+          <Toaster
+            theme="dark"
+            toastOptions={{
+              style: {
+                background: "#2a2a2a",
+                border: "1px solid rgba(255, 87, 34, 0.2)",
+                color: "white",
+              },
+              closeButton: true,
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

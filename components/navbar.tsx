@@ -19,8 +19,8 @@ const routes = [
   { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
   { href: "/catering", label: "Catering" },
-  { href: "/contact", label: "Contact Us" },
   { href: "/find-us", label: "Find Us" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 export function Navbar() {

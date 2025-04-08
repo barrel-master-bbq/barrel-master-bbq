@@ -3,15 +3,16 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { featured } from "@/lib/menu";
+import { getFeaturedMenu } from "@/lib/actions";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featured = await getFeaturedMenu();
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative w-full h-[70vh] flex items-center justify-center">
         <Image
-          src="/placeholder.svg?height=1080&width=1920"
+          src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg"
           alt="BBQ hero image"
           fill
           className="object-cover brightness-50"
@@ -39,49 +40,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-12">
-            Our Signature BBQ
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featured.map((item, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden rounded-lg"
-              >
-                <div className="aspect-square relative">
-                  <Image
-                    src={item.image || "/placeholder.svg"}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-bbq-black to-transparent flex flex-col justify-end p-6">
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-white/80">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Button
-              asChild
-              variant="outline"
-              className="border-bbq-flame text-bbq-flame hover:bg-bbq-flame/10"
-            >
-              <Link href="/menu" className="flex items-center gap-2">
-                Explore Full Menu <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* About Preview */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted">
         <div className="container mx-auto">
@@ -91,7 +49,7 @@ export default function HomePage() {
                 src="/placeholder.svg?height=800&width=800"
                 alt="About Barrel Master BBQ"
                 fill
-                className="object-cover"
+                className="object-fit"
               />
             </div>
             <div>
@@ -119,6 +77,49 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Featured Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">
+            Our Signature BBQ
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featured.map((item, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-lg"
+              >
+                <div className="aspect-square relative">
+                  <Image
+                    src={item.image || "/placeholder.svg"}
+                    alt={item.name}
+                    fill
+                    className="object-cover transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-bbq-black to-transparent flex flex-col justify-end p-6">
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {item.name}
+                  </h3>
+                  <p className="text-white/80">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Button
+              asChild
+              variant="outline"
+              className="border-bbq-flame text-bbq-flame hover:bg-bbq-flame/10"
+            >
+              <Link href="/menu" className="flex items-center gap-2">
+                Explore Full Menu <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Location Preview */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto text-center">
@@ -126,14 +127,7 @@ export default function HomePage() {
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
             Check our schedule for upcoming locations.
           </p>
-          <div className="relative h-[400px] rounded-lg overflow-hidden mb-8">
-            <Image
-              src="/placeholder.svg?height=800&width=1600"
-              alt="Barrel Master BBQ Location"
-              fill
-              className="object-cover"
-            />
-          </div>
+
           <Button
             asChild
             className="bg-bbq-flame hover:bg-bbq-flame/80 text-white"
