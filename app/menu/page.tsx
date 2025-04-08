@@ -145,7 +145,7 @@ function MenuTab({
           <p className="text-white/80 mb-8 max-w-3xl">{description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {menuItems.map((item, index) => (
+            {menuItems?.map((item, index) => (
               <div
                 key={index}
                 className="flex flex-col sm:flex-row gap-4 bg-muted p-4 rounded-lg"
