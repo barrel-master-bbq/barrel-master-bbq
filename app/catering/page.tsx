@@ -4,6 +4,7 @@ import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { cateringOptions, sides } from "@/lib/menu";
 
 const CATERING_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSe4E5hVIDPS-KZapnDU6_rs4Hd9X93CA-Jwnu_Ue3UbTZckPA/viewform";
@@ -83,60 +84,9 @@ export default function CateringPage() {
           Side Options
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="bg-muted border-bbq-flame/20 text-white">
-            <CardContent className="pt-6">
-              <div className="relative w-full h-48 rounded-md overflow-hidden mb-6">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Baked Beans"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Baked Beans</h3>
-              <p className="text-white/80 mb-4">
-                Our signature baked beans with a sweet and savory flavor,
-                slow-cooked with bits of brisket.
-              </p>
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">Half Pan</span>
-                  <span className="text-bbq-flame font-bold">$20</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">Full Pan</span>
-                  <span className="text-bbq-flame font-bold">$35</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-muted border-bbq-flame/20 text-white">
-            <CardContent className="pt-6">
-              <div className="relative w-full h-48 rounded-md overflow-hidden mb-6">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Coleslaw"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Coleslaw</h3>
-              <p className="text-white/80 mb-4">
-                Crisp and fresh coleslaw with a light, tangy dressing. The
-                perfect complement to our smoked meats.
-              </p>
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">Half Pan</span>
-                  <span className="text-bbq-flame font-bold">$10</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">Full Pan</span>
-                  <span className="text-bbq-flame font-bold">$18</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {sides.map((side) => (
+            <SideCard card={side} key={side.name} />
+          ))}
         </div>
       </div>
 
@@ -146,34 +96,7 @@ export default function CateringPage() {
           Meat Options
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              name: "Brisket",
-              description:
-                "Slow-smoked for 14 hours with our signature rub. Sliced to order.",
-              price: "$25.00/lb",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "Pulled Pork",
-              description:
-                "Tender, hand-pulled pork shoulder smoked for 12 hours.",
-              price: "$16.00/lb",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "Chicken",
-              description:
-                "Half chicken brined and smoked to juicy perfection.",
-              price: "$14.00 each",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "Ribs",
-              description: "",
-              price: "$35.00/rack",
-            },
-          ].map((item, index) => (
+          {cateringOptions.map((item, index) => (
             <div key={index} className="bg-muted p-4 rounded-lg">
               <div className="relative w-full h-40 rounded-md overflow-hidden mb-4">
                 <Image
@@ -220,3 +143,35 @@ export default function CateringPage() {
     </div>
   );
 }
+
+const SideCard = ({
+  card,
+}: {
+  card: {
+    name: string;
+    description: string;
+    image: string;
+    priceFull: string;
+    priceHalf: string;
+  };
+}) => (
+  <Card className="bg-muted border-bbq-flame/20 text-white">
+    <CardContent className="pt-6">
+      <div className="relative w-full h-48 rounded-md overflow-hidden mb-6">
+        <Image src={card.image} alt={card.name} fill className="object-cover" />
+      </div>
+      <h3 className="text-2xl font-bold mb-2">{card.name}</h3>
+      <p className="text-white/80 mb-4">{card.description}</p>
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between items-center">
+          <span className="font-medium">Half Pan</span>
+          <span className="text-bbq-flame font-bold">{card.priceHalf}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="font-medium">Full Pan</span>
+          <span className="text-bbq-flame font-bold">{card.priceFull}</span>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+);

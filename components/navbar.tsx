@@ -7,16 +7,20 @@ import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import Image from "next/image";
 
 const routes = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
   { href: "/menu", label: "Menu" },
   { href: "/catering", label: "Catering" },
   { href: "/contact", label: "Contact Us" },
-  { href: "/location", label: "On-Site Location" },
+  { href: "/find-us", label: "Find Us" },
 ];
 
 export function Navbar() {
@@ -25,8 +29,9 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
+      <div className="container flex h-16 items-center z-[999]">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTitle className="sr-only">Menu</SheetTitle>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="mr-2 md:hidden">
               <Menu className="h-6 w-6" />
@@ -54,9 +59,15 @@ export function Navbar() {
                   {route.label}
                 </Link>
               ))}
-              <Button className="mt-4 bg-accent hover:bg-accent">
+              <Link
+                href={"/order"}
+                className={cn(
+                  buttonVariants({ variant: "default" }),
+                  "mt-4 bg-accent hover:bg-accent/90"
+                )}
+              >
                 Order Now
-              </Button>
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>

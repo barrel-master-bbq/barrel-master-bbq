@@ -4,6 +4,7 @@ import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { menu } from "@/lib/menu";
 
 export default function MenuPage() {
   return (
@@ -63,84 +64,29 @@ export default function MenuPage() {
           <MenuTab
             value="pork"
             title="Pork"
-            description="All our meats are smoked low and slow over oak and hickory
-                  wood. Served with your choice of sauce on the side."
-            menuItems={[
-              {
-                name: "Full Rack Ribs",
-                description: "",
-                image: "",
-                price: "$35.00",
-              },
-              {
-                name: "Half Rack Ribs",
-                description: "",
-                image: "",
-                price: "$17.50",
-              },
-              {
-                name: "Pulled Pork",
-                description: "",
-                image: "",
-                price: "$16.00/lb",
-              },
-            ]}
+            description="Insert description here"
+            menuItems={menu.pork}
           />
 
           <MenuTab
             value="brisket"
             title="Brisket"
-            description="All our meats are smoked low and slow over oak and hickory
-                  wood. Served with your choice of sauce on the side."
-            menuItems={[
-              {
-                name: "Brisket (Fatty)",
-                description: "",
-                image: "",
-                price: "$25.00/lb",
-              },
-              {
-                name: "Brisket (Lean)",
-                description: "",
-                image: "",
-                price: "$25.00/lb",
-              },
-            ]}
+            description="Insert description here"
+            menuItems={menu.brisket}
           />
 
           <MenuTab
             value="chicken"
             title="Chicken"
-            description="All our meats are smoked low and slow over oak and hickory
-                  wood. Served with your choice of sauce on the side."
-            menuItems={[
-              {
-                name: "Half Chicken",
-                description: "",
-                image: "",
-                price: "$14.00",
-              },
-            ]}
+            description="Insert description here"
+            menuItems={menu.chicken}
           />
 
           <MenuTab
             value="sides"
             title="Sides"
-            description="All sides are made fresh daily with traditional recipes."
-            menuItems={[
-              {
-                name: "BBQ Beans",
-                description: "",
-                image: "",
-                price: "$6.00",
-              },
-              {
-                name: "Coleslaw",
-                description: "",
-                image: "",
-                price: "$6.00",
-              },
-            ]}
+            description="Insert description here"
+            menuItems={menu.sides}
           />
         </div>
       </Tabs>

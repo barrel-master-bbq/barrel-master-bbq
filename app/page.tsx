@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { featured } from "@/lib/menu";
 
 export default function HomePage() {
   return (
@@ -45,26 +46,7 @@ export default function HomePage() {
             Our Signature BBQ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Slow-Smoked Brisket",
-                description:
-                  "Smoked for 14 hours over oak wood for the perfect bark and tenderness",
-                image: "/placeholder.svg?height=400&width=400",
-              },
-              {
-                title: "St. Louis Ribs",
-                description:
-                  "Fall-off-the-bone tender with our signature dry rub and glaze",
-                image: "/placeholder.svg?height=400&width=400",
-              },
-              {
-                title: "Pulled Pork",
-                description:
-                  "Juicy, hand-pulled pork shoulder with a hint of smoke and spice",
-                image: "/placeholder.svg?height=400&width=400",
-              },
-            ].map((item, index) => (
+            {featured.map((item, index) => (
               <div
                 key={index}
                 className="group relative overflow-hidden rounded-lg"
@@ -132,15 +114,6 @@ export default function HomePage() {
                 cravings to full-blown feasts, we make it easy to get top-notch
                 barbecue without the wait.
               </p>
-              <Button
-                asChild
-                variant="outline"
-                className="border-bbq-flame text-bbq-flame hover:bg-bbq-flame/10"
-              >
-                <Link href="/about" className="flex items-center gap-2">
-                  Learn More About Us <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
             </div>
           </div>
         </div>
@@ -151,8 +124,7 @@ export default function HomePage() {
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Visit Us</h2>
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
-            Join us at our restaurant or find our food truck at events around
-            town. Check our schedule for upcoming locations.
+            Check our schedule for upcoming locations.
           </p>
           <div className="relative h-[400px] rounded-lg overflow-hidden mb-8">
             <Image
@@ -166,7 +138,7 @@ export default function HomePage() {
             asChild
             className="bg-bbq-flame hover:bg-bbq-flame/80 text-white"
           >
-            <Link href="/location">Find Our Location</Link>
+            <Link href="/find-us">Find Our Location</Link>
           </Button>
         </div>
       </section>
