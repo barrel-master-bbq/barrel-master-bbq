@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/location`,
+      url: `${baseUrl}/find-us`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
