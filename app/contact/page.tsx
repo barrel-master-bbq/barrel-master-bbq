@@ -26,10 +26,13 @@ export default function ContactPage() {
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
           Get in Touch
         </h1>
-        <p className="text-xl text-white/90 max-w-2xl mx-auto">
-          Barrel Master BBQ delivers smoked meats straight to your favorite
-          brewery taproom. Want to talk BBQ? Drop us a line.
-        </p>
+        <div className="text-xl text-white/90 max-w-2xl mx-auto flex flex-col gap-2">
+          <p>
+            Barrel Master BBQ also offers private BBQ classes! We specialize in
+            Weddings, Family Gatherings, Graduation Parties & Corporate Events.
+          </p>
+          <p>Get in touch today and we&apos;ll handle the rest!</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -72,12 +75,13 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone (Optional)</Label>
+                    <Label htmlFor="phone">Phone</Label>
                     <Input
                       id="phone"
                       name="phone"
                       type="tel"
                       placeholder="(123) 456-7890"
+                      required
                       className="bg-bbq-black/50 border-white/20 text-white placeholder:text-white/50"
                     />
                   </div>

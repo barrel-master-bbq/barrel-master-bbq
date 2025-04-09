@@ -4,8 +4,7 @@ import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-const CATERING_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSe4E5hVIDPS-KZapnDU6_rs4Hd9X93CA-Jwnu_Ue3UbTZckPA/viewform";
+const CATERING_FORM_URL = process.env.NEXT_PUBLIC_ORDER_FORM_URL ?? "";
 
 export default function CateringPage() {
   return (
@@ -32,12 +31,18 @@ export default function CateringPage() {
       {/* CTA Section */}
       <div className="text-center py-12 px-4 sm:px-6 lg:px-8 bg-muted rounded-xl mb-16">
         <h2 className="text-3xl font-bold text-white mb-6">
-          Ready to Book Your Catering?
+          Ready to Book Your Next Event?
         </h2>
-        <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-          Click the button below to fill out our catering request form. Catering
-          orders must be placed at least 72 hours in advance.
-        </p>
+        <div className="text-xl text-white/80 max-w-2xl mx-auto mb-8 flex flex-col gap-4">
+          <p>
+            We specialize in Weddings, Family Gatherings, Graduation Parties &
+            Corporate Events.
+          </p>
+          <p>
+            Click the button below to fill out our catering request form.
+            Catering orders must be placed at least 72 hours in advance.
+          </p>
+        </div>
         <Button
           asChild
           size="lg"

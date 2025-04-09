@@ -7,8 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getFeaturedMenu } from "@/lib/actions";
 
 // Replace this with your actual Google Form URL
-const GOOGLE_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSd5SfMoT2bIH24qmgkp9eH8H1lkNtUAg_b_qCRCh1oZwP6lCw/viewform";
+const GOOGLE_FORM_URL = process.env.NEXT_PUBLIC_ORDER_FORM_URL ?? "";
 
 export default async function OrderPage() {
   const featured = await getFeaturedMenu();
@@ -78,9 +77,30 @@ export default async function OrderPage() {
           </Card>
         </div>
       </div>
-
+      {/* CTA Section */}
+      <div className="text-center py-12 px-4 sm:px-6 lg:px-8 bg-muted rounded-xl mb-16">
+        <h2 className="text-3xl font-bold text-white mb-6">Ready to Order?</h2>
+        <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
+          Click the button below to fill out our order form. Orders must be
+          placed at least 72 hours in advance.
+        </p>
+        <Button
+          asChild
+          size="lg"
+          className="bg-bbq-flame hover:bg-bbq-flame/80 text-white text-lg px-8 py-6 h-auto"
+        >
+          <Link
+            href={GOOGLE_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2"
+          >
+            Place Your Order <ExternalLink className="h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
       {/* Popular Items Section */}
-      <div className="mb-16">
+      <div>
         <h2 className="text-3xl font-bold text-white mb-8 text-center">
           Popular Items
         </h2>
@@ -104,29 +124,6 @@ export default async function OrderPage() {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="text-center py-12 px-4 sm:px-6 lg:px-8 bg-muted rounded-xl">
-        <h2 className="text-3xl font-bold text-white mb-6">Ready to Order?</h2>
-        <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-          Click the button below to fill out our order form. Orders must be
-          placed at least 72 hours in advance.
-        </p>
-        <Button
-          asChild
-          size="lg"
-          className="bg-bbq-flame hover:bg-bbq-flame/80 text-white text-lg px-8 py-6 h-auto"
-        >
-          <Link
-            href={GOOGLE_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            Place Your Order <ExternalLink className="h-5 w-5" />
-          </Link>
-        </Button>
       </div>
     </div>
   );

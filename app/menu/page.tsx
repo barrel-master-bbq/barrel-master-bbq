@@ -36,20 +36,20 @@ export default async function MenuPage() {
       </div>
 
       {/* Menu Tabs */}
-      <Tabs defaultValue="pork" className="w-full">
+      <Tabs defaultValue="beef" className="w-full">
         <div className="flex justify-center mb-8">
           <TabsList className="bg-muted">
             <TabsTrigger
-              value="pork"
+              value="beef"
               className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
-              Pork
+              Beef
             </TabsTrigger>
             <TabsTrigger
-              value="brisket"
+              value="bison"
               className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
-              Brisket
+              Bison
             </TabsTrigger>
 
             <TabsTrigger
@@ -57,6 +57,12 @@ export default async function MenuPage() {
               className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
             >
               Chicken
+            </TabsTrigger>
+            <TabsTrigger
+              value="pork"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
+            >
+              Pork
             </TabsTrigger>
 
             <TabsTrigger
@@ -69,17 +75,17 @@ export default async function MenuPage() {
         </div>
         <div className="mt-16 mb-16">
           <MenuTab
-            value="pork"
-            title="Pork"
-            description="From fall-off-the-bone ribs to smoky pulled pork, our pork offerings are slow-cooked to perfection and loaded with rich, savory flavor."
-            menuItems={menu.pork}
+            value="beef"
+            title="Beef"
+            description="Smoked low and slow, our brisket is tender, juicy, and full of that deep, wood-fired flavor BBQ dreams are made of."
+            menuItems={menu.beef}
           />
 
           <MenuTab
-            value="brisket"
-            title="Brisket"
+            value="bison"
+            title="Bison"
             description="Smoked low and slow, our brisket is tender, juicy, and full of that deep, wood-fired flavor BBQ dreams are made of."
-            menuItems={menu.brisket}
+            menuItems={menu.bison}
           />
 
           <MenuTab
@@ -87,6 +93,12 @@ export default async function MenuPage() {
             title="Chicken"
             description="Our BBQ chicken is flame-kissed and seasoned just right — juicy on the inside, crisp on the outside, and bursting with flavor in every bite."
             menuItems={menu.chicken}
+          />
+          <MenuTab
+            value="pork"
+            title="Pork"
+            description="From fall-off-the-bone ribs to smoky pulled pork, our pork offerings are slow-cooked to perfection and loaded with rich, savory flavor."
+            menuItems={menu.pork}
           />
 
           <MenuTab

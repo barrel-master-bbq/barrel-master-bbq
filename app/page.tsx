@@ -53,9 +53,7 @@ export default async function HomePage() {
               />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-white mb-6">
-                Our BBQ Story
-              </h2>
+              <h2 className="text-3xl font-bold text-white mb-6">About Us</h2>
               <p className="text-white/80 mb-6">
                 At Barrel Master BBQ, we keep it simple—bold flavors, quick
                 service, and barbecue done right. With over a decade of
@@ -81,7 +79,7 @@ export default async function HomePage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-white text-center mb-12">
-            Our Signature BBQ
+            Our Signature Barrel BBQ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featured.map((item, index) => (
@@ -123,7 +121,7 @@ export default async function HomePage() {
       {/* Location Preview */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Visit Us</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">Find Us</h2>
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
             Check our schedule for upcoming locations.
           </p>
