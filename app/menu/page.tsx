@@ -41,39 +41,39 @@ export default async function MenuPage() {
           <TabsList className="bg-muted">
             <TabsTrigger
               value="beef"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
             >
               Beef
             </TabsTrigger>
             <TabsTrigger
               value="bison"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
             >
               Bison
             </TabsTrigger>
 
             <TabsTrigger
               value="chicken"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
             >
               Chicken
             </TabsTrigger>
             <TabsTrigger
               value="pork"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
             >
               Pork
             </TabsTrigger>
 
             <TabsTrigger
               value="sides"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white text-xl"
+              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
             >
               Sides
             </TabsTrigger>
           </TabsList>
         </div>
-        <div className="mt-16 mb-16">
+        <div className="sm:mt-4 mb-12">
           <MenuTab
             value="beef"
             title="Beef"

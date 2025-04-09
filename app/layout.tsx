@@ -6,6 +6,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Toaster } from "sonner";
+import SocialBar from "@/components/SocialBar";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={cn(inter.className, "mb-12")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -53,6 +55,7 @@ export default function RootLayout({
         >
           <Navbar />
           <main>{children}</main>
+          <SocialBar />
           <Toaster
             theme="dark"
             toastOptions={{
