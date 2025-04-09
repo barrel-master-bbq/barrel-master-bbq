@@ -84,7 +84,7 @@ export default async function MenuPage() {
           <MenuTab
             value="bison"
             title="Bison"
-            description="Smoked low and slow, our brisket is tender, juicy, and full of that deep, wood-fired flavor BBQ dreams are made of."
+            description="Lean, rich, and naturally flavorful — our bison is slow-smoked to perfection, offering a bold twist on BBQ with a tender bite and a hint of wild."
             menuItems={menu.bison}
           />
 
