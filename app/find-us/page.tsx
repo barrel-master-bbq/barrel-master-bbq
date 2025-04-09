@@ -19,11 +19,11 @@ export default async function HomePage() {
   const { address, location_name, updated } = await getLocation();
 
   return (
-    <section className="grid md:grid-cols-2">
-      <article className="max-w-2xl mx-auto px-4 py-8 text-center">
+    <section className="grid md:grid-cols-2 gap-8 px-4 py-8">
+      {/* Map Section */}
+      <article className="text-center max-w-xl mx-auto w-full">
         <h1 className="text-4xl font-bold mb-2">Current Location</h1>
-
-        <p className="text-lg mb-4">
+        <p className="text-xl mb-4">
           Find us today at{" "}
           <span className="font-semibold">
             {location_name ?? "our next stop"}

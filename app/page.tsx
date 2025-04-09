@@ -76,7 +76,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="sm:py-16 py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-white text-center mb-12">
             Our Signature Barrel BBQ
@@ -119,7 +119,7 @@ export default async function HomePage() {
       </section>
 
       {/* Location Preview */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Find Us</h2>
           <p className="text-white/80 max-w-2xl mx-auto mb-8">
