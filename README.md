@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Barrel Master BBQ
 
-## Getting Started
+This is the official site for Barrel Master BBQ — a mobile BBQ operation that partners with local breweries. Built with [Next.js](https://nextjs.org/) and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Getting Started
+
+### 1. Clone the project
+
+```bash
+git clone https://github.com/your-username/barrelmasterbbq.git
+cd barrelmasterbbq
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set environment variables
+
+Create a .env.local file in the root of the project and add the following:
+
+```env
+MENU_API_URL=https://your-google-apps-script-url
+NEXT_PUBLIC_CALENDAR_URL=https://calendar.google.com/calendar/embed?src=your-calendar-id
+NEXT_PUBLIC_ORDER_FORM_URL=https://your-order-form-link
+```
+
+These values are used to fetch the live menu, display your public calendar, and link to your order form.
+
+### 4. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then visit http://localhost:3000 to see the site locally.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗 Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If you’re hosting as a static site (like on Netlify):
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+The output will be in the /out folder — you can upload that to Netlify or any static hosting provider.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Next.js
+- Tailwind CSS
+- Google Sheets (as a mini CMS)
+- Google Calendar (for upcoming stops)
 
-## Deploy on Vercel
+## 📬 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT — do what you want, just don’t mess with our brisket.
