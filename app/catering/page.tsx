@@ -31,7 +31,7 @@ export default function CateringPage() {
       {/* CTA Section */}
       <div className="text-center py-12 px-4 sm:px-6 lg:px-8 bg-muted rounded-xl mb-16">
         <h2 className="text-3xl font-bold text-white mb-6">
-          Ready to Book Your Next Event?
+          Ready to Book Your Next Events?
         </h2>
         <div className="text-xl text-white/80 max-w-2xl mx-auto mb-8 flex flex-col gap-4">
           <p>

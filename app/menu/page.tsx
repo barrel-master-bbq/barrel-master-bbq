@@ -12,8 +12,28 @@ async function getMenu() {
   return res.json();
 }
 
+async function getCategoryDescriptions() {
+  const res = await fetch(`${process.env.MENU_API_URL}?type=categories`, {
+    next: { revalidate: 60 },
+  });
+  return res.json();
+}
+
 export default async function MenuPage() {
   const menu = await getMenu();
+  const tabKeys = Object.keys(menu).sort((a, b) => {
+    if (a === "other") return 1;
+    if (b === "other") return -1;
+
+    return a.localeCompare(b);
+  });
+
+  const categoryDescriptions = await getCategoryDescriptions();
+
+  if (!menu || !categoryDescriptions) {
+    return <div>Error loading menu.</div>;
+  }
+
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
@@ -39,74 +59,36 @@ export default async function MenuPage() {
       <Tabs defaultValue="beef" className="w-full">
         <div className="flex justify-center mb-8">
           <TabsList className="bg-muted">
-            <TabsTrigger
-              value="beef"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
-            >
-              Beef
-            </TabsTrigger>
-            <TabsTrigger
-              value="bison"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
-            >
-              Bison
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="chicken"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
-            >
-              Chicken
-            </TabsTrigger>
-            <TabsTrigger
-              value="pork"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
-            >
-              Pork
-            </TabsTrigger>
-
-            <TabsTrigger
-              value="sides"
-              className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl"
-            >
-              Sides
-            </TabsTrigger>
+            {tabKeys.map((key) => {
+              return (
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  className="data-[state=active]:bg-bbq-flame data-[state=active]:text-white sm:text-xl capitalize"
+                >
+                  {key}
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
         </div>
         <div className="sm:mt-4 mb-12">
-          <MenuTab
-            value="beef"
-            title="Beef"
-            description="Smoked low and slow, our brisket is tender, juicy, and full of that deep, wood-fired flavor BBQ dreams are made of."
-            menuItems={menu.beef}
-          />
+          {tabKeys.map((key) => {
+            const description =
+              categoryDescriptions.find(
+                (desc: { name: string; description: string }) =>
+                  desc.name === key
+              )?.description ?? "";
 
-          <MenuTab
-            value="bison"
-            title="Bison"
-            description="Lean, rich, and naturally flavorful — our bison is slow-smoked to perfection, offering a bold twist on BBQ with a tender bite and a hint of wild."
-            menuItems={menu.bison}
-          />
-
-          <MenuTab
-            value="chicken"
-            title="Chicken"
-            description="Our BBQ chicken is flame-kissed and seasoned just right — juicy on the inside, crisp on the outside, and bursting with flavor in every bite."
-            menuItems={menu.chicken}
-          />
-          <MenuTab
-            value="pork"
-            title="Pork"
-            description="From fall-off-the-bone ribs to smoky pulled pork, our pork offerings are slow-cooked to perfection and loaded with rich, savory flavor."
-            menuItems={menu.pork}
-          />
-
-          <MenuTab
-            value="sides"
-            title="Sides"
-            description="No plate is complete without the classics. From creamy coleslaw to smoky beans, our sides bring balance to every BBQ bite."
-            menuItems={menu.sides}
-          />
+            return (
+              <MenuTab
+                key={key}
+                value={key}
+                description={description}
+                menuItems={menu[key]}
+              />
+            );
+          })}
         </div>
       </Tabs>
 
@@ -132,7 +114,7 @@ export default async function MenuPage() {
 
 function MenuTab({
   menuItems,
-  title,
+
   description,
   value,
 }: {
@@ -142,7 +124,7 @@ function MenuTab({
     image: string;
     price: string;
   }[];
-  title: string;
+
   description: string;
   value: string;
 }) {
@@ -150,9 +132,9 @@ function MenuTab({
     <TabsContent value={value} className="mt-0">
       <div className="grid gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+          <h2 className="text-2xl font-bold text-white mb-6 flex items-center capitalize">
             <span className="w-8 h-1 bg-bbq-flame mr-3"></span>
-            {title}
+            {value}
           </h2>
           <p className="text-white/80 mb-8 max-w-3xl">{description}</p>
 
