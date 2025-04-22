@@ -80,7 +80,7 @@ export function Navbar() {
               height={25}
               className="ml-2"
             />
-            <span className="font-bold text-xl hidden md:inline-flex">
+            <span className="font-bold xl:text-3xl lg:text-2xl hidden md:inline-flex">
               Barrel Master BBQ
             </span>
           </Link>
@@ -91,7 +91,7 @@ export function Navbar() {
               key={route.href}
               href={route.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-accent/90",
+                "xl:text-2xl lg:text-xl font-medium transition-colors hover:text-accent/90",
                 pathname === route.href
                   ? "text-accent"
                   : "text-muted-foreground"
@@ -105,7 +105,7 @@ export function Navbar() {
           <Link
             className={cn(
               buttonVariants({ variant: "default" }),
-              "bg-accent hover:bg-accent/90 hidden md:inline-flex"
+              "xl:text-2xl lg:text-xl bg-accent hover:bg-accent/90 hidden md:inline-flex text-lg"
             )}
             href={"/order"}
           >
