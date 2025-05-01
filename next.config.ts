@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       "cdn.pixabay.com",
       "images.unsplash.com",
       "res.cloudinary.com",
+      "photos.google.com",
+      "photos.app.goo.gl",
+      "lh3.googleusercontent.com",
     ],
   },
 };
