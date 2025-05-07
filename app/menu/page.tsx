@@ -27,15 +27,7 @@ async function getCategoryDescriptions() {
   return res.json();
 }
 
-async function getMenuOverview() {
-  const res = await fetch(`${process.env.MENU_API_URL}?type=menu-overview`, {
-    next: { revalidate: 60 },
-  });
-  return res.json();
-}
-
 export default async function MenuPage() {
-  const menuOverview = await getMenuOverview();
   const menu = await getMenu();
   const tabKeys = Object.keys(menu).sort((a, b) => {
     if (a === "other") return 1;
@@ -70,28 +62,6 @@ export default async function MenuPage() {
         </div>
       </div>
 
-      {menuOverview.length > 0 && (
-        <div className="w-full flex justify-center mb-10">
-          <div className="w-fit min-w-[380px] sm:min-w-[440px]">
-            <Table className="w-full">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="px-12">Item</TableHead>
-                  <TableHead className="">Price</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {menuOverview.map((item: { item: string; price: string }) => (
-                  <TableRow key={item.item}>
-                    <TableCell className="px-12">{item.item}</TableCell>
-                    <TableCell className="">{item.price}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      )}
       {/* Menu Tabs */}
       <Tabs defaultValue="beef" className="w-full">
         <div className="flex justify-center my-8">
@@ -168,6 +138,26 @@ function MenuTab({
   return (
     <TabsContent value={value} className="mt-0">
       <div className="grid gap-8">
+        <div className="w-full flex justify-center mb-10 col-span-full">
+          <div className="w-fit min-w-[380px] sm:min-w-[440px]">
+            <Table className="w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="px-12">Item</TableHead>
+                  <TableHead className="">Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {menuItems.map((item) => (
+                  <TableRow key={item.name}>
+                    <TableCell className="px-12">{item.name}</TableCell>
+                    <TableCell className="">{item.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
         <div>
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center capitalize">
             <span className="w-8 h-1 bg-bbq-flame mr-3"></span>
@@ -194,9 +184,9 @@ function MenuTab({
                     <h3 className="text-xl font-bold text-white">
                       {item.name}
                     </h3>
-                    <span className="text-bbq-flame font-bold">
+                    {/* <span className="text-bbq-flame font-bold">
                       {item.price}
-                    </span>
+                    </span> */}
                   </div>
                   <p className="text-white/80 text-sm">{item.description}</p>
                 </div>
