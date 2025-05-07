@@ -40,7 +40,6 @@ export default async function MenuPage() {
   const tabKeys = Object.keys(menu).sort((a, b) => {
     if (a === "other") return 1;
     if (b === "other") return -1;
-
     return a.localeCompare(b);
   });
 
