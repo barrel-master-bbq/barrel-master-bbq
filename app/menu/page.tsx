@@ -4,6 +4,14 @@ import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 async function getMenu() {
   const res = await fetch(`${process.env.MENU_API_URL}?type=menu`, {
@@ -19,7 +27,15 @@ async function getCategoryDescriptions() {
   return res.json();
 }
 
+async function getMenuOverview() {
+  const res = await fetch(`${process.env.MENU_API_URL}?type=menu-overview`, {
+    next: { revalidate: 60 },
+  });
+  return res.json();
+}
+
 export default async function MenuPage() {
+  const menuOverview = await getMenuOverview();
   const menu = await getMenu();
   const tabKeys = Object.keys(menu).sort((a, b) => {
     if (a === "other") return 1;
@@ -37,7 +53,7 @@ export default async function MenuPage() {
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
-      <div className="relative w-full h-[250px] rounded-xl overflow-hidden mb-10">
+      <div className="relative w-full h-[250px] rounded-xl overflow-hidden mb-8">
         <Image
           src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg"
           alt="BBQ spread"
@@ -55,9 +71,31 @@ export default async function MenuPage() {
         </div>
       </div>
 
+      {menuOverview.length > 0 && (
+        <div className="w-full flex justify-center mb-10">
+          <div className="w-fit min-w-[380px] sm:min-w-[440px]">
+            <Table className="w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="px-12">Item</TableHead>
+                  <TableHead className="">Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {menuOverview.map((item: { item: string; price: string }) => (
+                  <TableRow key={item.item}>
+                    <TableCell className="px-12">{item.item}</TableCell>
+                    <TableCell className="">{item.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      )}
       {/* Menu Tabs */}
       <Tabs defaultValue="beef" className="w-full">
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center my-8">
           <TabsList className="bg-muted">
             {tabKeys.map((key) => {
               return (
