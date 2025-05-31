@@ -12,19 +12,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { sanity } from "@/lib/sanity";
+import {
+  allMenuItemsQuery,
+  categoryDescriptionsQuery,
+  menuPageQuery,
+} from "@/lib/queries";
+import { MenuItem } from "@/types/menu";
+import { MenuPageType } from "@/types/pages";
 
-async function getMenu() {
-  const res = await fetch(`${process.env.MENU_API_URL}?type=menu`, {
-    next: { revalidate: 60 },
-  });
-  return res.json();
+export async function getMenu() {
+  const items: MenuItem[] = await sanity.fetch(allMenuItemsQuery);
+
+  const grouped = items.reduce(
+    (acc, item) => {
+      const category = item.category?.toLowerCase() || "other";
+      if (!acc[category]) acc[category] = [];
+      acc[category].push(item);
+      return acc;
+    },
+    {} as Record<string, typeof items>
+  );
+
+  return grouped;
 }
 
 async function getCategoryDescriptions() {
-  const res = await fetch(`${process.env.MENU_API_URL}?type=categories`, {
-    next: { revalidate: 60 },
-  });
-  return res.json();
+  return sanity.fetch(categoryDescriptionsQuery);
 }
 
 export default async function MenuPage() {
@@ -36,17 +50,18 @@ export default async function MenuPage() {
   });
 
   const categoryDescriptions = await getCategoryDescriptions();
+  const menuPage: MenuPageType = await sanity.fetch(menuPageQuery);
 
   if (!menu || !categoryDescriptions) {
     return <div>Error loading menu.</div>;
   }
-
+  const { banner, orderCard } = menuPage;
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
       <div className="relative w-full h-[250px] rounded-xl overflow-hidden mb-8">
         <Image
-          src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg"
+          src={banner.imageUrl}
           alt="BBQ spread"
           fill
           className="object-cover brightness-75"
@@ -54,11 +69,9 @@ export default async function MenuPage() {
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6 bg-gradient-to-t from-bbq-black/90 to-transparent">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Our Menu
+            {banner.heading}
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl">
-            Authentic wood-fired BBQ with homemade rubs and sauces
-          </p>
+          <p className="text-xl text-white/90 max-w-2xl">{banner.subheading}</p>
         </div>
       </div>
 
@@ -83,8 +96,8 @@ export default async function MenuPage() {
           {tabKeys.map((key) => {
             const description =
               categoryDescriptions.find(
-                (desc: { name: string; description: string }) =>
-                  desc.name === key
+                (desc: { category: string; description: string }) =>
+                  desc.category === key
               )?.description ?? "";
 
             return (
@@ -101,9 +114,11 @@ export default async function MenuPage() {
 
       {/* CTA Section */}
       <div className="text-center py-12 px-4 sm:px-6 lg:px-8 bg-muted rounded-xl">
-        <h2 className="text-3xl font-bold text-white mb-6">Ready to Order?</h2>
+        <h2 className="text-3xl font-bold text-white mb-6">
+          {orderCard.heading}
+        </h2>
         <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-          Place your order online for pickup or delivery.
+          {orderCard.subheading}
         </p>
         <Button
           asChild
@@ -111,7 +126,7 @@ export default async function MenuPage() {
           className="bg-bbq-flame hover:bg-bbq-flame/80 text-white text-lg px-8 py-6 h-auto"
         >
           <Link href="/order" className="flex items-center gap-2">
-            Order Now <ExternalLink className="h-5 w-5" />
+            {orderCard.buttonText} <ExternalLink className="h-5 w-5" />
           </Link>
         </Button>
       </div>
@@ -125,12 +140,7 @@ function MenuTab({
   description,
   value,
 }: {
-  menuItems: {
-    name: string;
-    description: string;
-    image: string;
-    price: string;
-  }[];
+  menuItems: MenuItem[];
 
   description: string;
   value: string;
@@ -184,9 +194,6 @@ function MenuTab({
                     <h3 className="text-xl font-bold text-white">
                       {item.name}
                     </h3>
-                    {/* <span className="text-bbq-flame font-bold">
-                      {item.price}
-                    </span> */}
                   </div>
                   <p className="text-white/80 text-sm">{item.description}</p>
                 </div>

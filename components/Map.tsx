@@ -22,7 +22,7 @@ export default function OSMMap({
   address,
   name,
 }: {
-  address: string;
+  address?: string;
   name?: string;
 }) {
   const [coords, setCoords] = useState<LatLngExpression | null>(null);
@@ -31,7 +31,7 @@ export default function OSMMap({
     async function fetchCoords() {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          address
+          address ?? "County Road 439, Hartsel, CO 80449, USA"
         )}`
       );
       const data = await res.json();
@@ -44,7 +44,9 @@ export default function OSMMap({
 
   if (!coords) return <Loading />;
 
-  const link = getMapsLink(address);
+  const link = getMapsLink(
+    address ?? "County Road 439, Hartsel, CO 80449, USA"
+  );
 
   return (
     <MapContainer

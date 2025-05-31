@@ -1,16 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Mail, Phone, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ContactPageData } from "@/types/pages";
 
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pageData, setPageData] = useState<null | ContactPageData>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("/api/contactInfo");
+      const data = await res.json();
+      setPageData(data);
+    }
+    fetchData();
+  }, []);
 
   const handleSubmit = () => {
     if (formRef.current) {
@@ -19,19 +30,21 @@ export default function ContactPage() {
     }
   };
 
+  if (!pageData) {
+    return <div className="text-center text-white py-12">Loading...</div>;
+  }
+
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-          Get in Touch
+          {pageData.hero.heading}
         </h1>
         <div className="text-xl text-white/90 max-w-2xl mx-auto flex flex-col gap-2">
-          <p>
-            Barrel Master BBQ also offers private BBQ classes! We specialize in
-            Weddings, Family Gatherings, Graduation Parties & Corporate Events.
-          </p>
-          <p>Get in touch today and we&apos;ll handle the rest!</p>
+          {pageData.hero.subheadings.map((p: string, i: number) => (
+            <p key={i}>{p}</p>
+          ))}
         </div>
       </div>
 
@@ -40,7 +53,9 @@ export default function ContactPage() {
         <div className="lg:col-span-2">
           <Card className="bg-muted border-bbq-flame/20 text-white">
             <CardContent className="pt-6">
-              <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                {pageData.formSection.heading}
+              </h2>
 
               <form
                 ref={formRef}
@@ -59,7 +74,6 @@ export default function ContactPage() {
                       className="bg-bbq-black/50 border-white/20 text-white placeholder:text-white/50"
                     />
                   </div>
-
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -85,7 +99,6 @@ export default function ContactPage() {
                       className="bg-bbq-black/50 border-white/20 text-white placeholder:text-white/50"
                     />
                   </div>
-
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
                     <Input
@@ -133,38 +146,35 @@ export default function ContactPage() {
           <Card className="bg-muted border-bbq-flame/20 text-white h-full">
             <CardContent className="pt-6">
               <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <Mail className="h-6 w-6 text-bbq-flame shrink-0 mt-1" />
                   <div>
                     <h3 className="font-medium mb-1">Email</h3>
                     <a
-                      href="mailto:tom@barrelmasterbbq.com"
+                      href={`mailto:${pageData.contactInfo.email}`}
                       className="text-white/80 hover:text-bbq-flame transition-colors"
                     >
-                      tom@barrelmasterbbq.com
+                      {pageData.contactInfo.email}
                     </a>
                   </div>
                 </div>
-
                 <div className="flex items-start gap-4">
                   <Phone className="h-6 w-6 text-bbq-flame shrink-0 mt-1" />
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
                     <a
-                      href="tel:3037208821"
+                      href={`tel:${pageData.contactInfo.phone}`}
                       className="text-white/80 hover:text-bbq-flame transition-colors"
                     >
-                      (303) 720-8821
+                      {pageData.contactInfo.phone}
                     </a>
                   </div>
                 </div>
               </div>
-
               <div className="mt-12 pt-6 border-t border-white/10">
                 <p className="text-white/80 italic">
-                  No frills, no fuss—just darn good BBQ, ready when you are!
+                  {pageData.contactInfo.footerNote}
                 </p>
               </div>
             </CardContent>

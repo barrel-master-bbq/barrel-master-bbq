@@ -1,50 +1,52 @@
-import CalendarPage from "@/components/CalendarPage";
+import CalendarEmbed from "@/components/CalendarEmbed";
 import MapWrapper from "@/components/MapWrapper";
-
-const { MENU_API_URL = "" } = process.env;
-
-async function getLocation() {
-  const res = await fetch(`${MENU_API_URL}?type=location`, {
-    next: { revalidate: 60 },
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch location");
-  }
-
-  return res.json();
-}
+import { currentLocationQuery, findUsPageQuery } from "@/lib/queries";
+import { sanity } from "@/lib/sanity";
+import { FindUsPageType } from "@/types/pages";
 
 export default async function HomePage() {
-  const { address, location_name, updated } = await getLocation();
+  const location = await sanity.fetch(currentLocationQuery);
+  const findUsPage: FindUsPageType = await sanity.fetch(findUsPageQuery);
+
+  if (!location || !findUsPage) return <div>Error Loading Find Us.</div>;
+
+  const { address, locationName, _updatedAt } = location;
+  const { location: locationCard, calendar } = findUsPage;
 
   return (
     <section className="grid md:grid-cols-2 gap-8 px-4 py-8">
       {/* Map Section */}
       <article className="text-center max-w-xl mx-auto w-full">
-        <h1 className="text-4xl font-bold mb-2">Current Location</h1>
+        <h1 className="text-4xl font-bold mb-2">{locationCard.heading}</h1>
         <p className="text-xl mb-4">
-          Find us today at{" "}
+          {locationCard.subheading}{" "}
           <span className="font-semibold">
-            {location_name ?? "our next stop"}
+            {locationName ?? "our next stop"}
           </span>
         </p>
 
-        <MapWrapper address={address} name={location_name} />
+        <MapWrapper address={address} name={locationName} />
 
         <p className="mt-6 text-md italic text-muted-foreground">
-          No frills, no fuss—just darn good BBQ, ready when you are!
+          {locationCard.tagline}
         </p>
 
         <div className="mt-6">
           <p className="text-lg">{address}</p>
           <p className="text-sm text-muted-foreground">
-            Last updated: {new Date(updated).toLocaleString()}
+            {locationCard.updatedAt} {new Date(_updatedAt).toLocaleString()}
           </p>
         </div>
       </article>
 
-      <CalendarPage />
+      <article className="text-center max-w-xl mx-auto w-full">
+        <h2 className="text-4xl font-bold mb-2">{calendar.heading}</h2>
+        <p className="text-xl mb-4">{calendar.subheading}</p>
+        <CalendarEmbed />
+        <p className="mt-6 text-md italic text-muted-foreground">
+          {calendar.tagline}
+        </p>
+      </article>
     </section>
   );
 }
