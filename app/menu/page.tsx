@@ -21,7 +21,7 @@ import {
 import { MenuItem } from "@/types/menu";
 import { MenuPageType } from "@/types/pages";
 
-export async function getMenu() {
+async function getMenu() {
   const items: MenuItem[] = await sanity.fetch(allMenuItemsQuery);
 
   const grouped = items.reduce(
