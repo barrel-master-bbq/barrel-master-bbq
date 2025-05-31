@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       "photos.google.com",
       "photos.app.goo.gl",
       "lh3.googleusercontent.com",
+      "cdn.sanity.io",
     ],
   },
 };
