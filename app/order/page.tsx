@@ -5,7 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MenuItem } from "@/types/menu";
-import { sanity } from "@/lib/sanity";
+import { revalidatingSanityFetch } from "@/lib/sanity";
 import {
   allMenuItemsQuery,
   externalLinksQuery,
@@ -14,7 +14,7 @@ import {
 import { OrderPageType } from "@/types/pages";
 
 async function getFeaturedMenu() {
-  const menu: MenuItem[] = await sanity.fetch(allMenuItemsQuery);
+  const menu: MenuItem[] = await revalidatingSanityFetch(allMenuItemsQuery);
 
   const featured = menu.filter((item) => item.featured === true);
 
@@ -23,8 +23,10 @@ async function getFeaturedMenu() {
 
 export default async function OrderPage() {
   const featured = await getFeaturedMenu();
-  const orderPage: OrderPageType = await sanity.fetch(orderPageQuery);
-  const externalLinks = await sanity.fetch(externalLinksQuery);
+  const orderPage: OrderPageType =
+    await revalidatingSanityFetch(orderPageQuery);
+  const externalLinks: { orderFormUrl: string } =
+    await revalidatingSanityFetch(externalLinksQuery);
   if (!featured || !orderPage || !externalLinks)
     return <div>An error has occurred.</div>;
 

@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { sanity } from "@/lib/sanity";
+import { revalidatingSanityFetch } from "@/lib/sanity";
 import {
   allMenuItemsQuery,
   categoryDescriptionsQuery,
@@ -22,7 +22,7 @@ import { MenuItem } from "@/types/menu";
 import { MenuPageType } from "@/types/pages";
 
 async function getMenu() {
-  const items: MenuItem[] = await sanity.fetch(allMenuItemsQuery);
+  const items: MenuItem[] = await revalidatingSanityFetch(allMenuItemsQuery);
 
   const grouped = items.reduce(
     (acc, item) => {
@@ -37,10 +37,6 @@ async function getMenu() {
   return grouped;
 }
 
-async function getCategoryDescriptions() {
-  return sanity.fetch(categoryDescriptionsQuery);
-}
-
 export default async function MenuPage() {
   const menu = await getMenu();
   const tabKeys = Object.keys(menu).sort((a, b) => {
@@ -49,8 +45,9 @@ export default async function MenuPage() {
     return a.localeCompare(b);
   });
 
-  const categoryDescriptions = await getCategoryDescriptions();
-  const menuPage: MenuPageType = await sanity.fetch(menuPageQuery);
+  const categoryDescriptions: { category: string; description: string }[] =
+    await revalidatingSanityFetch(categoryDescriptionsQuery);
+  const menuPage: MenuPageType = await revalidatingSanityFetch(menuPageQuery);
 
   if (!menu || !categoryDescriptions) {
     return <div>Error loading menu.</div>;
@@ -95,10 +92,8 @@ export default async function MenuPage() {
         <div className="sm:mt-4 mb-12">
           {tabKeys.map((key) => {
             const description =
-              categoryDescriptions.find(
-                (desc: { category: string; description: string }) =>
-                  desc.category === key
-              )?.description ?? "";
+              categoryDescriptions.find((desc) => desc.category === key)
+                ?.description ?? "";
 
             return (
               <MenuTab

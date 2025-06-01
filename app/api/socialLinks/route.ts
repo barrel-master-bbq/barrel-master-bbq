@@ -1,9 +1,9 @@
 import { socialLinksQuery } from "@/lib/queries";
-import { sanity } from "@/lib/sanity";
+import { revalidatingSanityFetch } from "@/lib/sanity";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const data = await sanity.fetch(socialLinksQuery);
+  const data = await revalidatingSanityFetch(socialLinksQuery);
 
   return NextResponse.json(data);
 }

@@ -1,12 +1,17 @@
 import CalendarEmbed from "@/components/CalendarEmbed";
 import MapWrapper from "@/components/MapWrapper";
 import { currentLocationQuery, findUsPageQuery } from "@/lib/queries";
-import { sanity } from "@/lib/sanity";
+import { revalidatingSanityFetch } from "@/lib/sanity";
 import { FindUsPageType } from "@/types/pages";
 
 export default async function HomePage() {
-  const location = await sanity.fetch(currentLocationQuery);
-  const findUsPage: FindUsPageType = await sanity.fetch(findUsPageQuery);
+  const location: {
+    address: string;
+    locationName: string;
+    _updatedAt: number;
+  } = await revalidatingSanityFetch(currentLocationQuery);
+  const findUsPage: FindUsPageType =
+    await revalidatingSanityFetch(findUsPageQuery);
 
   if (!location || !findUsPage) return <div>Error Loading Find Us.</div>;
 

@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { sanity } from "@/lib/sanity";
+import { revalidatingSanityFetch } from "@/lib/sanity";
 import { allMenuItemsQuery, homePageQuery } from "@/lib/queries";
 import { MenuItem } from "@/types/menu";
 import { HomePageProps } from "@/types/pages";
 
 async function getFeaturedMenu() {
-  const menu: MenuItem[] = await sanity.fetch(allMenuItemsQuery);
+  const menu: MenuItem[] = await revalidatingSanityFetch(allMenuItemsQuery);
 
   const featured = menu.filter((item) => item.featured === true);
 
@@ -18,7 +18,7 @@ async function getFeaturedMenu() {
 
 export default async function HomePage() {
   const featured = await getFeaturedMenu();
-  const homePage: HomePageProps = await sanity.fetch(homePageQuery);
+  const homePage: HomePageProps = await revalidatingSanityFetch(homePageQuery);
 
   if (!homePage) return null;
 

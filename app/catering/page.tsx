@@ -3,13 +3,15 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { sanity } from "@/lib/sanity";
+import { revalidatingSanityFetch } from "@/lib/sanity";
 import { cateringPageQuery, externalLinksQuery } from "@/lib/queries";
 import { CateringPageType } from "@/types/pages";
 
 export default async function CateringPage() {
-  const cateringPage: CateringPageType = await sanity.fetch(cateringPageQuery);
-  const externalLinks = await sanity.fetch(externalLinksQuery);
+  const cateringPage: CateringPageType =
+    await revalidatingSanityFetch(cateringPageQuery);
+  const externalLinks: { orderFormUrl: string } =
+    await revalidatingSanityFetch(externalLinksQuery);
 
   if (!cateringPage || !externalLinks)
     return <div>Error Loading Catering Page.</div>;
